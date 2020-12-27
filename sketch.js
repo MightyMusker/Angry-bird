@@ -10,6 +10,7 @@ var pig1,pig2;
 var log1,log2,log3,log4;
 var bird;
 var backg;
+var platform;
 
 function preload(){
   backg=loadImage("sprites/bg.png");
@@ -21,7 +22,8 @@ function setup() {
   engine=Engine.create();
   world=engine.world;
   createCanvas(1200,400);
-  ground=new Ground();
+  ground=new Ground(600,height,1200,20);
+  platform=new Ground(150,320,300,170);
  box1=new Box(700,370,70,70);
  box2=new Box(920,370,70,70);
 pig1=new Pig(810,370);
@@ -43,6 +45,7 @@ function draw() {
 background(backg);
 Engine.update(engine);
 ground.display();
+platform.display();
 box1.display();
 box2.display();
 pig1.display();
