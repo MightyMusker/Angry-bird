@@ -15,7 +15,7 @@ var backg;
 var platform;
 var log5;
 var rope;
-
+var gamestate="onsling"
 
 function preload(){
   backg=loadImage("sprites/bg.png");
@@ -34,18 +34,18 @@ function setup() {
   pig1=new Pig(810,370);
   log1=new Log(810,340,300,PI/2);
 
-box3=new Box(700,325,70,70);
-box4=new Box(920,325,70,70);
-pig2=new Pig(810,330);
-log2=new Log(810,290,300,PI/2);
+  box3=new Box(700,325,70,70);
+  box4=new Box(920,325,70,70);
+  pig2=new Pig(810,330);
+  log2=new Log(810,290,300,PI/2);
 
-box5=new Box(810,280,70,70);
-log3=new Log(755,270,150,PI/7);
-log4=new Log(865,270,150,-PI/7);
+  box5=new Box(810,280,70,70);
+  log3=new Log(755,270,150,PI/7);
+  log4=new Log(865,270,150,-PI/7);
 
-log5=new Log(150,50,150,PI/2);
-bird=new Bird(200,200,50,50);
-rope=new Slingshot(bird.body,log5.body);
+ // log5=new Log(150,50,150,PI/2);
+  bird=new Bird(210,70,50,50);
+  rope=new Slingshot(bird.body,{x:190,y:60});
 }
 
 function draw() {
@@ -65,6 +65,23 @@ box5.display();
 log3.display();
 log4.display();
 bird.display();
-log5.display();
+//log5.display();
 rope.display();
+}
+function mouseDragged(){
+ if(gamestate==="onsling"){
+  Matter.Body.setPosition(bird.body,{x:mouseX,y:mouseY})
+ }
+}
+function mouseReleased(){
+  rope.fly();
+  gamestate="launched";
+}
+function keyPressed(){
+ 
+  if(keyCode===32){
+    Matter.Body.setPosition(bird.body,{x:210,y:70})
+    rope.attach(bird.body);
+    bird.trijectory=[]
+  }
 }
