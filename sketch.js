@@ -16,10 +16,11 @@ var platform;
 var log5;
 var rope;
 var gamestate="onsling"
+var score=0;
 
 function preload(){
-  backg=loadImage("sprites/bg.png");
-
+ // backg=loadImage("sprites/bg.png");
+  getTime();
 }
 
 
@@ -49,7 +50,12 @@ function setup() {
 }
 
 function draw() {
+  if(backg){
 background(backg);
+  }
+  else{
+    background(0);
+  }
 Engine.update(engine);
 ground.display();
 platform.display();
@@ -65,8 +71,12 @@ box5.display();
 log3.display();
 log4.display();
 bird.display();
+pig1.score();
+pig2.score();
 //log5.display();
 rope.display();
+textSize(20);
+text("score: "+ score,1000,50)
 }
 function mouseDragged(){
  if(gamestate==="onsling"){
@@ -80,8 +90,22 @@ function mouseReleased(){
 function keyPressed(){
  
   if(keyCode===32){
+    gamestate="onsling"
     Matter.Body.setPosition(bird.body,{x:210,y:70})
     rope.attach(bird.body);
     bird.trijectory=[]
   }
+}
+async function getTime(){
+  var response=await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata');
+  var jsonData=await response.json();
+  var time=jsonData.datetime
+  var hour=time.slice(11,13);
+ if(hour>=06&&hour<=14){
+   bg="sprites/bg.png"
+ }
+ else{
+   bg="sprites/bg2..jpg"
+ }
+ backg=loadImage(bg);
 }
